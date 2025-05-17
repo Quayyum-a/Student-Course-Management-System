@@ -6,7 +6,7 @@ class CourseRepository:
 
     def save_course(self, course):
         with open(self.filename, 'a') as file:
-            file.write(f"{course.course_id},{course.name},{course.instructor_email}\n")
+            file.write(f"{course.course_id},{course.name},{course.facilitator_email}\n")
 
     def find_course_by_id(self, course_id):
         try:
