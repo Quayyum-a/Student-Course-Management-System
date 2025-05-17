@@ -8,3 +8,9 @@ class AuthService:
             raise ValueError("Email already registered")
         self.user_repository.save_user(user)
         return True
+
+    def login_user(self, email, password):
+        user = self.user_repository.find_user_by_email(email)
+        if user and user.password == password:
+            return user
+        return None
