@@ -11,7 +11,6 @@ class AuthService:
         self.user_repository = user_repository
 
     def register_user(self, user):
-        """Register a new user if the email is unique and valid."""
         if not self._is_valid_email(user.email):
             raise InvalidEmailError("Invalid email format")
         if not user.full_name.strip():
@@ -25,7 +24,6 @@ class AuthService:
         return True
 
     def login_user(self, email, password):
-        """Authenticate a user with email and password."""
         if not email or not password:
             raise EmptyFieldError("Email and password cannot be empty")
         if not self._is_valid_email(email):
@@ -36,6 +34,5 @@ class AuthService:
         return None
 
     def _is_valid_email(self, email):
-        """Validate email format using regex."""
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return bool(re.match(pattern, email))
