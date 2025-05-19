@@ -5,6 +5,7 @@ from src.data.course_repository import CourseRepository
 from src.data.enrollment_repository import EnrollmentRepository
 from src.service.course_service import CourseService
 from src.service.enrollment_service import EnrollmentService
+from src.exceptions import ResourceNotFoundError, InvalidEmailError, InvalidFormatError
 
 
 class TestEnrollmentService(unittest.TestCase):
@@ -33,7 +34,7 @@ class TestEnrollmentService(unittest.TestCase):
             self.assertEqual(lines[0].strip(), "Python,quayyum@gmail.com,")
 
     def test_enroll_student_course_not_found(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ResourceNotFoundError):
             self.service.enroll_student("CS999", "quayyum@gmail.com")
 
     def test_assign_grade(self):
