@@ -5,6 +5,7 @@ from src.data.user_repository import UserRepository
 from src.domain.facilitator import Facilitator
 from src.domain.student import Student
 from src.service.auth_service import AuthService
+from src.exceptions import InvalidEmailError, EmptyFieldError, ResourceAlreadyExistsError
 
 
 class TestAuthService(unittest.TestCase):
@@ -36,20 +37,20 @@ class TestAuthService(unittest.TestCase):
         user2 = Facilitator("User Two", "dup@example.com", "pass456")
         result1 = self.service.register_user(user1)
         self.assertTrue(result1)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ResourceAlreadyExistsError):
             self.service.register_user(user2)
 
     def test_register_user_invalid_email(self):
         user = Student("Test User", "invalid_email", "pass123")
-        with self.assertRaises(ValueError):
+        with self.assertRaises(InvalidEmailError):
             self.service.register_user(user)
 
     def test_register_user_empty_fields(self):
         user = Student("", "test@example.com", "pass123")
-        with self.assertRaises(ValueError):
+        with self.assertRaises(EmptyFieldError):
             self.service.register_user(user)
         user = Student("Test User", "test@example.com", "")
-        with self.assertRaises(ValueError):
+        with self.assertRaises(EmptyFieldError):
             self.service.register_user(user)
 
     def test_login_user_success(self):
@@ -71,13 +72,13 @@ class TestAuthService(unittest.TestCase):
         self.assertIsNone(logged_in_user)
 
     def test_login_user_invalid_email(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(InvalidEmailError):
             self.service.login_user("invalid_email", "pass123")
 
     def test_login_user_empty_input(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(EmptyFieldError):
             self.service.login_user("", "pass123")
-        with self.assertRaises(ValueError):
+        with self.assertRaises(EmptyFieldError):
             self.service.login_user("test@example.com", "")
 
 if __name__ == '__main__':
