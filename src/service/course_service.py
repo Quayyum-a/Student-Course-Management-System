@@ -10,7 +10,6 @@ class CourseService:
         self.course_repository = course_repository
 
     def create_course(self, course_id, name, facilitator_email):
-        """Create a new course with the given ID, name, and facilitator."""
         if not course_id or not course_id.isalnum():
             raise InvalidFormatError("Course ID must be non-empty and alphanumeric")
         if not name.strip():
@@ -20,7 +19,6 @@ class CourseService:
         return True
 
     def get_all_courses(self):
-        """Retrieve all courses from the repository."""
         try:
             with open(self.course_repository.filename, 'r') as file:
                 courses = []
