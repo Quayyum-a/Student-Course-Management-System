@@ -70,11 +70,9 @@ class EnrollmentService:
         return self.enrollment_repository.find_enrollments_by_course(course_id)
 
     def _is_valid_email(self, email):
-        """Validate email format using regex."""
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return bool(re.match(pattern, email))
 
     def _is_valid_grade(self, grade):
-        """Validate grade format (e.g., A, B, C, etc.)."""
         valid_grades = ['A', 'B', 'C', 'D', 'F', 'A+', 'A-', 'B+', 'B-', 'C+', 'C-', 'D+', 'D-']
         return grade in valid_grades
